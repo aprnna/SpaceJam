@@ -3,18 +3,23 @@ using UnityEngine.SceneManagement;
 
 public class TestAdditive : MonoBehaviour
 {
-    public void changeScene()
-    {
-        SceneManager.LoadSceneAsync("ShopScene", LoadSceneMode.Additive);
-    }
+    public GameObject roulettePrefab;
+    public Transform canvas;
 
-    public void testToko()
+    void Start()
     {
-        Debug.Log("Ini Toko");
-    }
+        GameObject gameObject = Instantiate(roulettePrefab, canvas);
+        RouletteUIController rouletteUI = gameObject.GetComponent<RouletteUIController>();
 
-    public void backScene()
-    {
-        SceneManager.UnloadSceneAsync("ShopScene");
+        rouletteUI.minValue = 10;
+        rouletteUI.maxValue = 15;
+        rouletteUI.autoStop = true;
+
+        rouletteUI.onRouletteStopped = (result) =>
+        {
+            Debug.Log($"The roulette has stopped! The result is: {result}");
+
+            // Destroy(gameObject, 1f);
+        };
     }
 }
