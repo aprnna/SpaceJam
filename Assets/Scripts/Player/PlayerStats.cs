@@ -130,6 +130,12 @@ namespace Player
             else Health = MaxHealth;
         }
 
+        public void HealShield(int value)
+        {
+            if (Shield + value <= MaxShield) Shield += value;
+            else Shield = MaxShield;
+        }
+
         public void PaymentItem(int value)
         {
             Coin -= value;

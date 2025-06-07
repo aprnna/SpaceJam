@@ -1,3 +1,4 @@
+using Player;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -16,17 +17,26 @@ public class ItemUI : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,
     public void OnPointerClick(PointerEventData eventData)
     {
         Debug.Log("You clicked " + itemSO.itemName);
-        switch (itemSO.consumableType)
+        if (PlayerStats.Instance.Coin < itemSO.itemPrice)
         {
-            case ConsumableType.Health:
-            
-                break;
-            case ConsumableType.Shield:
-                break;
-            default:
-                break;
+            Debug.Log("You Dont Have enough Money");
         }
-        Destroy(gameObject);
+        else
+        {
+            switch (itemSO.consumableType)
+            {
+                case ConsumableType.Health:
+                    PlayerStats.Instance.Heal(itemSO.amount);
+                    break;
+                case ConsumableType.Shield:
+                    PlayerStats.Instance.HealShield(itemSO.amount);
+                    break;
+                default:
+                    break;
+            }
+            Destroy(gameObject);
+        }
+
     }
 
     public void OnPointerEnter(PointerEventData eventData)
